@@ -1,0 +1,11 @@
+source .venv/bin/activate
+
+docker-compose up --build -d
+
+docker ps -a
+
+docker-compose logs -f
+
+http://localhost:8000/api/ping/
+
+http://172.20.0.4:5173/
