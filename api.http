@@ -1,0 +1,20 @@
+### Ping endpoint – simple health check
+GET http://localhost:8000/api/ping/
+Accept: application/json
+
+### Obtain JWT access & refresh tokens
+POST http://localhost:8000/api/token/
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+
+### Refresh an access token
+POST http://localhost:8000/api/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "your_refresh_token_here"
+}
