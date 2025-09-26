@@ -1,20 +1,36 @@
-### Ping endpoint – simple health check
+### Ping (проверка)
 GET http://localhost:8000/api/ping/
 Accept: application/json
 
-### Obtain JWT access & refresh tokens
+### Регистрация нового пользователя
+POST http://localhost:8000/api/register/
+Content-Type: application/json
+
+{
+  "username": "пользователь",
+  "email": "user@example.com",
+  "password": "сложный_пороль"
+}
+
+### Получить JWT‑токены
 POST http://localhost:8000/api/token/
 Content-Type: application/json
 
 {
-  "username": "your_username",
-  "password": "your_password"
+  "username": "пользователь",
+  "password": "сложный_пороль"
 }
 
-### Refresh an access token
+### Обновить access‑токен
 POST http://localhost:8000/api/token/refresh/
 Content-Type: application/json
 
 {
-  "refresh": "your_refresh_token_here"
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1OTAwNjY4MywiaWF0IjoxNzU4OTIwMjgzLCJqdGkiOiI5OWM3ZTk2NmY5ZTg0YWZiYjZmNTMxNjhjZWQ2YjYwNSIsInVzZXJfaWQiOiIxIn0.lo4IcWqzuxKB0ZvT1PfiaVzi5xY_CKy1ibnP_5majQ8"
 }
+
+# -------------------------------------------------
+# Frontend – Svelte/Vite (development)
+# -------------------------------------------------
+###
+GET http://172.20.0.4:5173/pong

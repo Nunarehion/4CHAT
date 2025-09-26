@@ -1,27 +1,23 @@
+<!-- src/routes/+page.svelte -->
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { ping } from "$lib/api.js";
+  import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
+  import { auth } from '$lib/authStore';
+  import { goto } from '$app/navigation';
 
-  let loading: boolean = true;
-  let error: string | null = null;
-  let data: { status: string; message: string } | null = null;
+  // При загрузке корневой страницы проверяем состояние auth‑store
+  onMount(() => {
+    const { access } = get(auth);
 
-  onMount(async () => {
-    try {
-      data = await ping();
-    } catch (e) {
-      error = (e as Error).message ?? String(e);
-    } finally {
-      loading = false;
+    // Если токен есть – считаем пользователя авторизованным
+    if (access) {
+      // перенаправляем на защищённый роут
+      goto('/protected');
+    } else {
+      // иначе – на страницу входа
+      goto('/login');
     }
   });
 </script>
 
-{#if loading}
-  <p>Загрузка…</p>
-{:else if error}
-  <p style="color:red">Ошибка: {error}</p>
-{:else}
-  <h2>Тестовый эндпоинт</h2>
-  <pre>{JSON.stringify(data, null, 2)}</pre>
-{/if}
+<!-- Пустой шаблон – пользователь сразу будет переадресован -->
