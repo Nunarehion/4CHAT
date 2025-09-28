@@ -87,10 +87,20 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'myproject'),
         'USER': os.getenv('DB_USER', 'myprojectuser'),
         'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'HOST': os.getenv('DB_HOST', 'postgres'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+# ---------------------------------------------------------------------------------
+# [DEBAG] Выводим все переменные окружения (для отладки)
+# ---------------------------------------------------------------------------------
+import os
+print("========= ENVIRONMENT =========")
+print("DB_NAME", os.getenv('DB_NAME', 'NOT SET'))
+for k, v in os.environ.items():
+    print(f"{k}={v}")
+print("========= END ENVIRONMENT =========")
+#___________________________________________________________________________________
 
 
 # Password validation
