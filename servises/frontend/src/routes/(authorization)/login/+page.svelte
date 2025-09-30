@@ -26,7 +26,7 @@
 <div class="container">
   <div class="card" role="region" aria-labelledby="login-title">
     <div class="brand">
-      <div class="logo" aria-hidden="true">DD</div>
+      <div class="logo" aria-hidden="true">@</div>
       <div>
         <div id="login-title" class="title">Вход в аккаунт</div>
         <div class="subtitle">Введите свои учётные данные для продолжения</div>
@@ -100,20 +100,6 @@
 </div>
 
 <style>
-  :global(body) {
-    margin: 0;
-    font-family:
-      Inter,
-      system-ui,
-      -apple-system,
-      "Segoe UI",
-      Roboto,
-      "Helvetica Neue",
-      Arial;
-    background: linear-gradient(180deg, #f6fbff 0%, #ffffff 60%);
-    color: #0f1724;
-  }
-
   .container {
     min-height: 100vh;
     display: grid;
@@ -134,10 +120,10 @@
     border: 1px solid rgba(15, 23, 36, 0.04);
   }
 
-  .card:focus-within {
+  /* .card:focus-within {
     transform: translateY(-4px);
     box-shadow: 0 18px 40px rgba(16, 24, 40, 0.12);
-  }
+  } */
 
   .brand {
     display: flex;

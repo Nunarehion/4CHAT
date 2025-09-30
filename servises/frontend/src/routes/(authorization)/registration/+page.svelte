@@ -1,7 +1,7 @@
 <!-- src/routes/register/+page.svelte -->
 <script lang="ts">
   import { register } from "$lib/api";
-  import { goto } from '$app/navigation';
+  import { goto } from "$app/navigation";
 
   let username = "";
   let email = "";
@@ -40,19 +40,25 @@
 <div class="container">
   <div class="card" role="region" aria-labelledby="reg-title">
     <div class="brand">
-      <div class="logo" aria-hidden="true">DD</div>
+      <div class="logo" aria-hidden="true">@</div>
       <div>
         <div id="reg-title" class="title">Создать аккаунт</div>
         <div class="subtitle">Зарегистрируйтесь, чтобы получить доступ</div>
       </div>
     </div>
 
-    <form class="reg-form" on:submit|preventDefault={submit} aria-describedby={error ? "error-msg" : undefined}>
+    <form
+      class="reg-form"
+      on:submit|preventDefault={submit}
+      aria-describedby={error ? "error-msg" : undefined}
+    >
       {#if error}
         <div id="error-msg" class="error" role="alert">{error}</div>
       {/if}
       {#if success}
-        <div class="success" role="status">Регистрация прошла успешно! Перенаправляем…</div>
+        <div class="success" role="status">
+          Регистрация прошла успешно! Перенаправляем…
+        </div>
       {/if}
 
       <label>
@@ -118,13 +124,6 @@
 </div>
 
 <style>
-  :global(body) {
-    margin: 0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg, #f6fbff 0%, #ffffff 60%);
-    color: #0f1724;
-  }
-
   .container {
     min-height: 100vh;
     display: grid;
@@ -137,15 +136,14 @@
     max-width: 520px;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(16,24,40,0.08);
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
     padding: 2rem;
-    transition: transform .18s ease, box-shadow .18s ease;
-    border: 1px solid rgba(15,23,36,0.04);
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+    border: 1px solid rgba(15, 23, 36, 0.04);
   }
-  .card:focus-within {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(16,24,40,0.12);
-  }
+
 
   .brand {
     display: flex;
@@ -157,7 +155,7 @@
     width: 44px;
     height: 44px;
     border-radius: 10px;
-    background: linear-gradient(135deg,#2563eb,#7c3aed);
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     display: grid;
     place-items: center;
     color: white;
@@ -196,14 +194,19 @@
     background: #fbfdff;
     outline: none;
     font-size: 0.95rem;
-    transition: box-shadow .12s ease, border-color .12s ease, transform .12s ease;
+    transition:
+      box-shadow 0.12s ease,
+      border-color 0.12s ease,
+      transform 0.12s ease;
   }
   .input:focus {
     border-color: #60a5fa;
-    box-shadow: 0 6px 20px rgba(96,165,250,0.12);
+    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.12);
     transform: translateY(-1px);
   }
-  .input::placeholder { color: #94a3b8; }
+  .input::placeholder {
+    color: #94a3b8;
+  }
 
   .meta-row {
     display: flex;
@@ -220,12 +223,17 @@
     cursor: pointer;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-    background: linear-gradient(90deg,#2563eb,#7c3aed);
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease,
+      opacity 0.12s ease;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
     color: white;
-    box-shadow: 0 8px 20px rgba(99,102,241,0.12);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
   }
-  .btn:active { transform: translateY(1px) scale(.998); }
+  .btn:active {
+    transform: translateY(1px) scale(0.998);
+  }
   .btn[disabled] {
     opacity: 0.6;
     cursor: not-allowed;
@@ -243,12 +251,14 @@
     text-decoration: none;
     font-weight: 600;
   }
-  .link-row a:hover { text-decoration: underline; }
+  .link-row a:hover {
+    text-decoration: underline;
+  }
 
   .error {
     background: #fff1f2;
     color: #b91c1c;
-    border: 1px solid rgba(185,28,28,0.08);
+    border: 1px solid rgba(185, 28, 28, 0.08);
     padding: 0.6rem 0.75rem;
     border-radius: 8px;
     font-size: 0.9rem;
@@ -257,14 +267,20 @@
   .success {
     background: #f0fdf4;
     color: #065f46;
-    border: 1px solid rgba(6,95,70,0.08);
+    border: 1px solid rgba(6, 95, 70, 0.08);
     padding: 0.6rem 0.75rem;
     border-radius: 8px;
     font-size: 0.9rem;
   }
 
   @media (max-width: 480px) {
-    .card { padding: 1.25rem; border-radius: 10px; }
-    .logo { width: 40px; height: 40px; }
+    .card {
+      padding: 1.25rem;
+      border-radius: 10px;
+    }
+    .logo {
+      width: 40px;
+      height: 40px;
+    }
   }
 </style>
