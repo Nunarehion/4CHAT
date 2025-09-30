@@ -1,36 +1,22 @@
-<!-- src/routes/register/+page.svelte -->
-<script lang="ts">
-  import { register } from "$lib/api";
-  import { goto } from '$app/navigation';
+<script>
+  import { login } from "$lib/api";
+  import { goto } from "$app/navigation";
 
   let username = "";
-  let email = "";
   let password = "";
-  let confirm = "";
-  let error: string = "";
-  let success = false;
+  let error = "";
   let loading = false;
 
-  const submit = async (): Promise<void> => {
+  /** @returns {Promise<void>} */
+  const submit = async () => {
     error = "";
-    success = false;
-
-    if (password !== confirm) {
-      error = "Пароли не совпадают";
-      return;
-    }
-    if (password.length < 8) {
-      error = "Пароль должен быть минимум 8 символов";
-      return;
-    }
-
     loading = true;
     try {
-      await register({ username, email, password });
-      success = true;
-      setTimeout(() => goto("/login"), 1200);
-    } catch (e: unknown) {
-      error = e instanceof Error ? e.message : String(e);
+      await login({ username, password });
+      await goto("/protected");
+    } catch (e) {
+      // @ts-ignore
+      error = e && e.message ? e.message : String(e);
     } finally {
       loading = false;
     }
@@ -38,21 +24,24 @@
 </script>
 
 <div class="container">
-  <div class="card" role="region" aria-labelledby="reg-title">
+  <div class="card" role="region" aria-labelledby="login-title">
     <div class="brand">
       <div class="logo" aria-hidden="true">DD</div>
       <div>
-        <div id="reg-title" class="title">Создать аккаунт</div>
-        <div class="subtitle">Зарегистрируйтесь, чтобы получить доступ</div>
+        <div id="login-title" class="title">Вход в аккаунт</div>
+        <div class="subtitle">Введите свои учётные данные для продолжения</div>
       </div>
     </div>
 
-    <form class="reg-form" on:submit|preventDefault={submit} aria-describedby={error ? "error-msg" : undefined}>
+    <form on:submit|preventDefault={submit} aria-describedby={error ? "error-msg" : undefined}>
       {#if error}
-        <div id="error-msg" class="error" role="alert">{error}</div>
-      {/if}
-      {#if success}
-        <div class="success" role="status">Регистрация прошла успешно! Перенаправляем…</div>
+        <div id="error-msg" class="error" role="alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M11.001 7h2v6h-2zM11 15h2v2h-2z" fill="#b91c1c"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#b91c1c" stroke-width="1.2" fill="none"/>
+          </svg>
+          <div>{error}</div>
+        </div>
       {/if}
 
       <label>
@@ -60,23 +49,10 @@
         <input
           class="input"
           bind:value={username}
-          placeholder="Отображаемое имя"
+          placeholder="Введите логин или email"
           autocomplete="username"
           required
           aria-label="Имя пользователя"
-        />
-      </label>
-
-      <label>
-        Email
-        <input
-          class="input"
-          type="email"
-          bind:value={email}
-          placeholder="you@example.com"
-          autocomplete="email"
-          required
-          aria-label="Email"
         />
       </label>
 
@@ -87,37 +63,34 @@
           type="password"
           bind:value={password}
           placeholder="Минимум 8 символов"
-          autocomplete="new-password"
+          autocomplete="current-password"
           required
           aria-label="Пароль"
         />
       </label>
 
-      <label>
-        Подтверждение пароля
-        <input
-          class="input"
-          type="password"
-          bind:value={confirm}
-          placeholder="Повторите пароль"
-          autocomplete="new-password"
-          required
-          aria-label="Подтверждение пароля"
-        />
-      </label>
+      <div class="meta-row">
+        <div style="font-size:0.82rem;color:#6b7280;">* Поля обязательны</div>
+        <a class="forgot" href="/forgot-password">Забыли пароль?</a>
+      </div>
 
       <button class="btn" type="submit" disabled={loading} aria-busy={loading}>
-        {#if loading}Создание…{:else}Зарегистрироваться{/if}
+        {#if loading}
+          Подождите...
+        {:else}
+          Войти
+        {/if}
       </button>
 
       <div class="link-row">
-        Уже есть аккаунт? <a href="/login">Войти</a>
+        Нет аккаунта? <a href="/registration">Зарегистрироваться</a>
       </div>
     </form>
   </div>
 </div>
 
 <style>
+  /* Scoped styles for Svelte 5 (no :global used) */
   :global(body) {
     margin: 0;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -134,7 +107,7 @@
 
   .card {
     width: 100%;
-    max-width: 520px;
+    max-width: 420px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(16,24,40,0.08);
@@ -175,7 +148,7 @@
     color: #475569;
   }
 
-  .reg-form {
+  form {
     margin-top: 1rem;
     display: grid;
     gap: 0.75rem;
@@ -212,6 +185,12 @@
     font-size: 0.85rem;
     color: #475569;
   }
+
+  .forgot {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  .forgot:hover { text-decoration: underline; }
 
   .btn {
     height: 46px;
@@ -251,15 +230,9 @@
     border: 1px solid rgba(185,28,28,0.08);
     padding: 0.6rem 0.75rem;
     border-radius: 8px;
-    font-size: 0.9rem;
-  }
-
-  .success {
-    background: #f0fdf4;
-    color: #065f46;
-    border: 1px solid rgba(6,95,70,0.08);
-    padding: 0.6rem 0.75rem;
-    border-radius: 8px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
     font-size: 0.9rem;
   }
 

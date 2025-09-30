@@ -9,3 +9,5 @@ docker-compose logs -f
 http://localhost:8000/api/ping/
 
 http://172.20.0.4:5173/
+
+sudo ss -ltnp | grep ':5432'

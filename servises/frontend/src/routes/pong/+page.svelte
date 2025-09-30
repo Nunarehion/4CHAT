@@ -15,7 +15,11 @@
       loading = false;
     }
   });
+
+  import Form from "$lib/components/Form.svelte";
 </script>
+
+<Form />
 
 {#if loading}
   <p>Загрузка…</p>

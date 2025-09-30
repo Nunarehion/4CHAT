@@ -2,3 +2,35 @@
     --bg-color: white;
     --text-color: black;
 }
+
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #f6fbff 0%, #ffffff 60%);
+    color: #0f1724;
+  }
+
+
+button {
+    height: 46px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease,
+      opacity 0.12s ease;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    color: white;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
+  }
+  button:active {
+    transform: translateY(1px) scale(0.998);
+  }
+  button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
