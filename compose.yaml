@@ -54,7 +54,10 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./servises/frontend:/app
+      - ./servises/frontend/src:/app/src
+      - ./servises/frontend/public:/app/public
+      - ./servises/frontend/svelte.config.js:/app/svelte.config.js
+      - ./servises/frontend/static:/app/static:cached
       - node_modules:/app/node_modules
     environment:
       - VITE_BACKEND_URL=http://backend:8000

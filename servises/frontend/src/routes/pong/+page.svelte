@@ -17,8 +17,10 @@
   });
 
   import Form from "$lib/components/Form.svelte";
+  import Post from "$lib/components/Post.svelte";
 </script>
 
+<Post />
 <Form />
 
 {#if loading}

@@ -11,3 +11,10 @@ http://localhost:8000/api/ping/
 http://172.20.0.4:5173/
 
 sudo ss -ltnp | grep ':5432'
+
+docker exec -it frontend /bin/sh
+
+
+npm install --save-dev sass-embedded
+
+https://svelte.dev/docs/kit/integrations
